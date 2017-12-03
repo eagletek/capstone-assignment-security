@@ -1,0 +1,18 @@
+<div class="user-list" ng-show="$ctrl.authz.canQuery">
+  <form id="user-filter" class="form-inline form-filter" ng-if="$ctrl.items">
+    <div class="form-group">
+      <label>Filter users:</label>
+      <input class="form-control"
+             placeholder="Query"
+             ng-model="$ctrl.query.name">
+    </div>
+  </form>
+  <ul>
+    <li ng-repeat="item in $ctrl.items | orderBy:'name' | filter: $ctrl.query ">
+      <a ui-sref="users({id:item.id})">
+          <span class="user_id id">{{item.id}}</span>
+          {{item.name}}
+      </a>
+    </li>
+  </ul>
+</div>

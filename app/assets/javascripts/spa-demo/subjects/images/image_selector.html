@@ -1,6 +1,15 @@
 <div class="image-list" ng-show="$ctrl.authz.canQuery">
+  <form id="image-filter" class="form-inline form-filter" ng-if="$ctrl.items">
+    <div class="form-group">
+      <label>Filter images:</label>
+      <input class="form-control"
+             placeholder="Query"
+             ng-model="$ctrl.query.caption">
+    </div>
+  </form>
+
   <ul>
-    <li ng-repeat="item in $ctrl.items | orderBy:'caption'">
+    <li ng-repeat="item in $ctrl.items | orderBy:'caption' | filter: $ctrl.query">
       <a ui-sref="images({id:item.id})">
           <span class="image_id id">{{item.id}}</span>
           {{item.caption}}

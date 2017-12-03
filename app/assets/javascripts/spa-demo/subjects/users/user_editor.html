@@ -1,0 +1,61 @@
+<form class="user-form row" name="userform" ng-show="$ctrl.item.id">
+  <span class="user_id id">{{$ctrl.item.id}}</span>
+  <span class="invalid">{{$ctrl.item.errors.full_messages}}</span>
+
+  <div class="user-name row col-lg-12">
+    <label class="col-xs-3">Name:</label>
+    <input class="col-xs-9"
+           name="user-name"
+           ng-model="$ctrl.item.name"
+           ng-readonly="!$ctrl.authz.canUpdate"
+           maxlength="80" />
+    <span class="invalid">{{$ctrl.item.errors.name}}</span>
+  </div>
+  <div class="user-email row col-lg-12">
+    <label class="col-xs-3">Email:</label>
+    <input class="col-xs-9"
+           name="user-email"
+           ng-model="$ctrl.item.email"
+           ng-readonly="!$ctrl.authz.canUpdate"
+           maxlength="80"
+           type="email" />
+    <span class="invalid">{{$ctrl.item.errors.email}}</span>
+  </div>
+
+  <div class="user-roles row col-lg-12">
+    <label class="col-xs-3">Roles:</label>
+    <ul class="user-roles col-xs-9">
+      <li ng-repeat="role in $ctrl.item.roles">
+        <input type="checkbox"
+               name="role-delete"
+               ng-model="role.toRemove"
+               value="{{role.id}}">
+        <div class="role-delete glyphicon glyphicon-remove"
+               ng-show="role.toRemove"></div>
+        <span class="id role_id">{{role.id}}</span>
+        <label class="role-name text-capitalize">{{role.name}}</label>
+        <label class="role-for" ng-show="role.for_type">for {{role.for_type}}</label>
+        <label class="role-for-id" ng-show="role.for_id">{{role.for_id}}</label>
+        <label class="role-for-descriptor" ng-show="role.for_descriptor">: {{role.for_descriptor}}</label>
+      </li>
+    </ul>
+  </div>
+
+
+  <div class="user-controls">
+    <span ng-show="$ctrl.authz.authenticated">
+      <span ng-show="$ctrl.item.id">
+        <button name="user-update"
+                type="submit"
+                ng-show="!$ctrl.authz.canUpdate"
+                ng-disabled="!$ctrl.haveDirtyRoles()"
+                ng-click="$ctrl.deleteRoles()">Remove Selected Roles</button>
+      </span>
+    </span>
+    <button name="user-clear"
+            type="submit"
+            ng-show="$ctrl.isAdmin()"
+            ng-click="$ctrl.clear()">Clear User</button>
+  </div>
+
+</form>

@@ -1,4 +1,6 @@
 
+form.user-form .id,
+div.user-list .id,
 form.thing-form .id,
 div.thing-list .id,
 form.image-form .id,
@@ -6,8 +8,14 @@ div.image-list .id {
   display: none;
 }
 
+sd-user-editor form,
 sd-image-editor form,
 sd-thing-editor form {
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.form-filter {
+  margin-top: 15px;
+  margin-bottom: 15px;
 }

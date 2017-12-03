@@ -1,6 +1,13 @@
 <div class="thing-list" ng-show="$ctrl.authz.canQuery">
+  <form id="thing-filter" class="form-inline form-filter" ng-if="$ctrl.items">
+    <div class="form-group">
+      <label>Filter things:</label>
+      <input class="form-control"
+             ng-model="$ctrl.query.name">
+    </div>
+  </form>
   <ul>
-    <li ng-repeat="item in $ctrl.items | orderBy:'name'">
+    <li ng-repeat="item in $ctrl.items | orderBy:'name' | filter: $ctrl.query">
       <a ui-sref="things({id:item.id})">
          <span class="thing_id id">{{item.id}}</span>
          {{item.name}}

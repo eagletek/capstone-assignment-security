@@ -44,7 +44,7 @@
       service.originator=[];
       whoAmI.get().$promise.then(
         function(response){processUserRoles(response, deferred);},
-        function(response){processUserRoles(response, deferred);});      
+        function(response){processUserRoles(response, deferred);});
     }
 
     //process application-level roles returned from server
@@ -55,14 +55,14 @@
           service.admin=true;
         } else if (value.role_name=="originator") {
           service.originator.push(value.resource);
-        }          
-      });      
+        }
+      });
 
       service.user=response;
       service.userPromise=null;
       deferred.resolve(response);
       console.log("processed roles", service.user);
-    }    
+    }
 
     function getAuthorizedUser() {
       var deferred = $q.defer();
@@ -90,7 +90,7 @@
     //return true if the user has an application admin role
     function isAdmin() {
       return service.user && service.admin && true;
-    }    
+    }
 
     //return true if the current user has an organizer role for the instance
     //users with this role have the lead when modifying the instance
@@ -116,8 +116,8 @@
       if (role) {
         return !user_roles ? false : user_roles.indexOf(role) >=0;
       } else {
-        return !user_roles ? true : user_roles.length==0 
+        return !user_roles ? true : user_roles.length==0
       }
-    } 
+    }
   }
 })();

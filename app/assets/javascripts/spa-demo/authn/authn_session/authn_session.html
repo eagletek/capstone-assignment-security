@@ -6,17 +6,17 @@
     <div class="form-group">
       <div id="login-email">
         <label>email</label>
-        <input type="email" 
-               name="login_email" 
-               ng-model="$ctrl.loginForm.email" 
+        <input type="email"
+               name="login_email"
+               ng-model="$ctrl.loginForm.email"
                required="required"/>
       </div>
 
       <div id="login-password">
         <label>password</label>
-        <input type="password" 
-               name="login_password" 
-               ng-model="$ctrl.loginForm.password" 
+        <input type="password"
+               name="login_password"
+               ng-model="$ctrl.loginForm.password"
                required="required"/>
       </div>
     </div>
@@ -34,20 +34,20 @@
     <div id="new-account">
       <label>New here?</label>
       <a ui-sref="accountSignup" class="initialism">Sign Up</a>
-    </div>    
+    </div>
   </form>
 </div>
 
 <div ng-show="$ctrl.getCurrentUser()">
-  <form id="logout-form" 
+  <form id="logout-form"
         ng-submit="$ctrl.logout()">
-    <span id="user_id" 
+    <span id="user_id"
           class="id"
           ng-if="$ctrl.getCurrentUser()">{{$ctrl.getCurrentUser().id}}</span>
 
     <div id="logout-identity">
-      <label>{{$ctrl.getCurrentUserName()}}</label>
-      <button type="submit" 
+      <label><a ui-sref="users({id:$ctrl.getCurrentUser().id})" ng-click="$ctrl.closeMenu()">{{$ctrl.getCurrentUserName()}}</a></label>
+      <button type="submit"
               name="logout_submit"
               class="btn btn-default">Logout</button>
     </div>
