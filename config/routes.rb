@@ -9,15 +9,18 @@ Rails.application.routes.draw do
     resources :foos, except: [:new, :edit]
     resources :bars, except: [:new, :edit]
     resources :images, except: [:new, :edit] do
+      resources :roles, only: [:index, :show, :create, :destroy]
       post "thing_images",  controller: :thing_images, action: :create
       get "thing_images",  controller: :thing_images, action: :image_things
       get "linkable_things",  controller: :thing_images, action: :linkable_things
     end
     resources :things, except: [:new, :edit] do
+      resources :roles, only: [:index, :show, :create, :destroy]
       resources :thing_images, only: [:index, :create, :update, :destroy]
     end
-    resources :users, only: [:index, :show]
-    # resources :roles, only: [:create, :destroy]
+    resources :users, only: [:index, :show] do
+      resources :roles, only: [:index, :show, :create, :destroy]
+    end
   end
 
   get "/client-assets/:name.:format", :to => redirect("/client/client-assets/%{name}.%{format}")

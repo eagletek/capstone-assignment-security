@@ -54,7 +54,7 @@ class ThingPolicy < ApplicationPolicy
              end}
     end
     def resolve
-      user_roles 
+      user_roles
     end
   end
 end

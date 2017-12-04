@@ -1,4 +1,5 @@
 json.id role.id
+json.user_id role.user_id
 json.name role.role_name
 json.for_type role.mname
 json.for_id role.mid
