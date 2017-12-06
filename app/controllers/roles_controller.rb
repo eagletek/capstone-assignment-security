@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  before_action :set_role, only: [:destroy]
+  before_action :set_role, only: [:show, :destroy]
   before_action :authenticate_user!, only: [:index, :create, :destroy]
   wrap_parameters :role, include: ["user_id", "role_name", "mname", "mid"]
   after_action :verify_authorized
@@ -16,6 +16,10 @@ class RolesController < ApplicationController
     elsif params[:image_id]
       @roles = policy.by_model Image.name, params[:image_id]
     end
+  end
+
+  def show
+    authorize @role
   end
 
   def create

@@ -5,6 +5,9 @@ class ApplicationPolicy
     @user = user
     @record = record
   end
+  def admin?
+    @user and @user.is_admin?
+  end
   def organizer_or_admin?
     @user.has_role([Role::ADMIN, Role::ORGANIZER], @record.model_name.name, @record.id)
   end
