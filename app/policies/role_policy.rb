@@ -20,9 +20,11 @@ class RolePolicy < ApplicationPolicy
   def index?
     @user
   end
+
   def show?
     self_or_admin? and scope.where(:id => record.id).exists?
   end
+
   def create?
     case record.role_name
     when Role::ADMIN
@@ -35,10 +37,12 @@ class RolePolicy < ApplicationPolicy
       false
     end
   end
+
   def update?
     # Roles are immutable
     false
   end
+
   def destroy?
     case record.role_name
     when Role::ADMIN

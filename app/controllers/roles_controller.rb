@@ -23,21 +23,29 @@ class RolesController < ApplicationController
   end
 
   def create
-    p = { user_id: params[:user_id],
-          mname: nil,
-          mid: nil }
+    p = { "user_id"=> params[:user_id],
+          "mname"=> nil,
+          "mid"=> nil }
     if (params[:image_id])
-      p[:mname] = Image.name
-      p[:mid] = params[:image_id]
+      p["mname"] = Image.name
+      p["mid"] = params[:image_id]
     elsif (params[:thing_id])
-      p[:mname] = Thing.name
-      p[:mid] = params[:thing_id]
+      p["mname"] = Thing.name
+      p["mid"] = params[:thing_id]
     end
 
-    @role = authorize Role.new(role_params.merge(p))
+    p = p.merge(role_params)
+    if p["role_name"] == Role::ADMIN
+      p["mname"] = nil
+      p["mid"] = nil
+    elsif p["role_name"] == Role::ORIGINATOR
+      p["mid"] = nil
+    end
+    @role = Role.new(p)
+    authorize @role
 
     if @role.save
-      render :show, status: :created, location: @role
+      render :show, status: :created, location: user_role_path(User.find(@role.user_id), @role)
     else
       render json: {errors:@role.errors.messages}, status: :unprocessable_entity
     end
@@ -60,9 +68,10 @@ class RolesController < ApplicationController
       params.require(:role).permit(:user_id, :role_name, :mname, :mid)
       params.require(:role).tap {|p|
           #_ids only required in payload when not part of URI
-          p.require(:user_id)    if !params[:user_id]
+          p.require(:user_id)   if !params[:user_id]
           p.permit(:mid)        if !(params[:thing_id] || params[:image_id])
           p.permit(:mname)      if !(params[:thing_id] || params[:image_id])
-        }.require(:role_name)
+          p.require(:role_name)
+        }
     end
 end
